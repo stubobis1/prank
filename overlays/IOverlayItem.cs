@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace OverlayProject.overlays
 {
-    public interface IOverlay
+    public interface IOverlayItem
     {
-        void Setup(Graphics gfx);
+
+        void Setup(Overlay overlay, Graphics gfx);
 
         void Update();
         void Draw(Graphics gfx);

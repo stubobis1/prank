@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows.Forms;
 using GameOverlay.Drawing;
 using GameOverlay.Windows;
+using OverlayProject.overlays;
 using OverlayProject.Properties;
 
 namespace OverlayProject
@@ -14,12 +15,14 @@ namespace OverlayProject
     public class Overlay
     {
 
-        public static GraphicsWindow Window;
-        public static Graphics Graphics;
+        public GraphicsWindow Window;
+        public Graphics Graphics;
 
-        public static Dictionary<string, SolidBrush> Brushes;
-        public static Dictionary<string, Font> Fonts;
-        public static Dictionary<string, Image> Images;
+        public Dictionary<string, SolidBrush> Brushes;
+        public Dictionary<string, Font> Fonts;
+        public Dictionary<string, Image> Images;
+
+        public List<IOverlayItem> Overlays = new List<IOverlayItem>();
 
         public Overlay()
         {
@@ -64,7 +67,6 @@ namespace OverlayProject
         public void Run()
         {
             Window.Create();
-
             Window.Join();
         }
 
@@ -79,8 +81,10 @@ namespace OverlayProject
             foreach (var pair in Brushes) pair.Value.Dispose();
             foreach (var pair in Fonts) pair.Value.Dispose();
             foreach (var pair in Images) pair.Value.Dispose();
+            DestoryGraphics(sender, e);
         }
 
+       
         private void _window_DrawGraphics(object sender, DrawGraphicsEventArgs e)
         {
             var gfx = e.Graphics;
@@ -92,7 +96,10 @@ namespace OverlayProject
 
         private void Setup(Graphics gfx)
         {
-
+            foreach (var o in Overlays)
+            {
+                o.Setup(this, gfx);
+            }
         }
 
         private void Draw(Graphics gfx)
@@ -100,15 +107,30 @@ namespace OverlayProject
 
             Update();
             gfx.ClearScene();
-
+            foreach (var o in Overlays)
+            {
+                o.Draw(gfx);
+            }
 
 
         }
 
         private void Update()
         {
-            
+            foreach (var o in Overlays)
+            {
+                o.Update();
+            }
         }
+
+        private void DestoryGraphics(object sender, DestroyGraphicsEventArgs e)
+        {
+            foreach (var o in Overlays)
+            {
+                o.DestroyGraphics(sender,e);
+            }
+        }
+
     }
 }
 

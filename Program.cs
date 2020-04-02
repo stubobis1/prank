@@ -8,6 +8,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Media;
 using OverlayProject;
+using OverlayProject.overlays;
 
 //
 //  Application Name: Drunk PC
@@ -32,7 +33,7 @@ namespace Prank
         static void Main(string[] args)
         {
             var overlay = new Overlay();
-
+            overlay.Overlays.Add(new OverlayOnMoveMouse());
             overlay.Run();
         }
 

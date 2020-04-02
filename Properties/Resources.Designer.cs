@@ -63,9 +63,9 @@ namespace OverlayProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap face {
+        public static System.Drawing.Bitmap default_png {
             get {
-                object obj = ResourceManager.GetObject("face", resourceCulture);
+                object obj = ResourceManager.GetObject("default.png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace OverlayProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
-        public static System.IO.UnmanagedMemoryStream what {
+        public static System.IO.UnmanagedMemoryStream default_wav {
             get {
-                return ResourceManager.GetStream("what", resourceCulture);
+                return ResourceManager.GetStream("default.wav", resourceCulture);
             }
         }
     }

@@ -16,12 +16,12 @@ using Image = GameOverlay.Drawing.Image;
 
 namespace OverlayProject.overlays
 {
-    public class OverlayOnMoveMouse : IOverlay
+    public class OverlayOnMoveMouse : IOverlayItem
     {
 
         public float MouseDistanceToActivate;
-        public DateTime TimeForReactivate;
-        public DateTime TimePerActivation;
+        public int MillisForReactivate;
+        public int MillisPerActivation;
 
         public Stream AudioStream;
         public SoundPlayer Player;
@@ -32,19 +32,28 @@ namespace OverlayProject.overlays
 
         public int OverlayImageWidth;
         public int OverlayImageHeight;
-        Vector2 displayPos;
+        Point displayPos;
 
         public OverlayOnMoveMouse(
             System.Drawing.Bitmap imageSource = null,
-            Stream audioSource = null)
+            Stream audioSource = null,
+            float mouseDistanceToActivate = 50f,
+            int millisPerActivation = 3000,
+            int millisForReactivate = 5000)
         {
-            AudioStream = audioSource == null ? Resources.what : audioSource;
-            SourceBitmap = imageSource == null ? Resources.face : imageSource;
+            this.MouseDistanceToActivate = mouseDistanceToActivate;
+            this.MillisPerActivation = millisPerActivation;
+            this.MillisForReactivate = millisForReactivate;
+            AudioStream = audioSource ?? Resources.default_wav;
+            SourceBitmap = imageSource ?? Resources.default_png;
         }
 
-        public void Setup(Graphics gfx)
+        public Overlay Parent;
+        public void Setup(Overlay parent, Graphics gfx)
         {
+            this.Parent = parent;
             Player = new SoundPlayer(AudioStream);
+
             MemoryStream stream = new MemoryStream();
             SourceBitmap.Save(stream, SourceBitmapFormat);
 
@@ -60,16 +69,16 @@ namespace OverlayProject.overlays
 
 
 
-            displayPos.X = Screen.PrimaryScreen.Bounds.Width / 2f;
-            displayPos.Y = Screen.PrimaryScreen.Bounds.Height / 2f;
+            displayPos.X = (Screen.PrimaryScreen.Bounds.Width / 2f) - (OverlayImageWidth / 2f);
+            displayPos.Y = (Screen.PrimaryScreen.Bounds.Height / 2f) - (OverlayImageHeight / 2f);
         }
 
 
         public void Draw(Graphics gfx)
         {
             if (isTriggered)
-            { 
-
+            {
+                gfx.DrawImage(OverlayImage, displayPos);
             }
         }
 
@@ -121,17 +130,22 @@ namespace OverlayProject.overlays
         public void Trigger()
         {
             Player.Play();
-            TimeToStopTrigger = DateTime.Now.AddMilliseconds(TimePerActivation.Millisecond);
+            TimeToStopTrigger = DateTime.Now.AddMilliseconds(MillisPerActivation);
             isTriggered = true;
         }
         public void StopTrigger()
         {
             Player.Stop();
-            TimeToNextTrigger = DateTime.Now.AddMilliseconds(TimeForReactivate.Millisecond);
+            TimeToNextTrigger = DateTime.Now.AddMilliseconds(MillisForReactivate);
             isTriggered = false;
         }
 
         public void DestroyGraphics(object sender, DestroyGraphicsEventArgs e)
+        {
+            DisposeResources();
+        }
+
+        private void DisposeResources()
         {
             Player.Dispose();
             //AudioStream.Dispose();

@@ -67,7 +67,7 @@
   <ItemGroup>
     <Compile Include="Helper.cs" />
     <Compile Include="Overlay.cs" />
-    <Compile Include="overlays\IOverlay.cs" />
+    <Compile Include="overlays\IOverlayItem.cs" />
     <Compile Include="overlays\OverlayOnMoveMouse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="DrunkPC.cs" />
