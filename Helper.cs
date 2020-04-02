@@ -1,6 +1,5 @@
 ﻿
-public static class Helper
+namespace OverlayProject
 {
 
 }
-

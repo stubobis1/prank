@@ -7,8 +7,8 @@
     <ProjectGuid>{EF22D4E1-7BA9-4452-AA39-0CCE06B85D33}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DrunkPC</RootNamespace>
-    <AssemblyName>DrunkPC</AssemblyName>
+    <RootNamespace>OverlayProject</RootNamespace>
+    <AssemblyName>OverlayProject</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,6 +33,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icons8-Halloween-Gingerbread-man.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GameOverlay, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -63,6 +66,8 @@
   <ItemGroup>
     <Compile Include="Helper.cs" />
     <Compile Include="Overlay.cs" />
+    <Compile Include="overlays\IOverlay.cs" />
+    <Compile Include="overlays\OverlayOnMoveMouse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="DrunkPC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +93,10 @@
   <ItemGroup>
     <None Include="what.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icons8-Halloween-Gingerbread-man.ico" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
